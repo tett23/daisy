@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'daisy'
+
+Daisy::Configuration.init('')
+
+class DaisyCLI < Thor
+  desc 'strages', 'strages'
+  def strages
+    Strages.items.each do |strage|
+      puts "#{strage.name}, #{strage.mount_point}"
+    end
+  end
+end
