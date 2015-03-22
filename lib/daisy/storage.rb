@@ -87,12 +87,12 @@ module Daisy
       end
     end
 
-    def exist?(name, fizzy: false)
+    def exist?(name)
       File.exist?(path(name))
     end
 
     def path(name)
-      File.join(@mount_point, Storage.output_dir(name), File.basename(name))
+      File.expand_path(File.join(@mount_point, Storage.output_dir(name), File.basename(name)))
     end
 
     class << self

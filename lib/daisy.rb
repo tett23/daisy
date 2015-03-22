@@ -10,18 +10,20 @@ module Daisy
 
   def write(path)
     raise 'file not exist' unless File.exist?(path)
+    path = File.expand_path(path)
     write_size = File.size(path)
 
-    storage = Daisy::Storages.items.shuffle.find do |item|
-      item.writable?(write_size: write_size)
+    storage = Daisy::Storages.find(path)
+    unless storage
+      storage = Daisy::Storages.items.shuffle.find do |item|
+        item.writable?(write_size: write_size)
+      end
     end
     raise WritableStrageNotFoundError if storage.nil?
 
     storage.write(path)
-  end
 
-  def writable?(path)
-
+    storage
   end
 
   def exist?(item_name)
